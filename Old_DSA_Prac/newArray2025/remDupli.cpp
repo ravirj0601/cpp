@@ -26,7 +26,7 @@ int removeDuplicate(vector<int>& myArr){
 
 int main(){
     vector<int> myArr = {0,0,1,1,1,2,2,3,3,4};
-    for(long unsigned int i = 0; i < myArr.size(; i++){
+    for(long unsigned int i = 0; i < myArr.size(); i++){
         cout << myArr[i] << " ";
     }
     cout << "\n" << removeDuplicate(myArr) << "\n";;
