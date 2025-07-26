@@ -85,7 +85,8 @@ int main() {
     return 0;
 }
 
-
+// Personal implementation....
+#if 0
 class TwoStacks {
     int* arr;
     int top1, top2;
@@ -140,3 +141,4 @@ public:
         
     };           // Pop from Stack2
 };
+#endif
