@@ -77,8 +77,6 @@ void printList(NODE *head) {
         while(curr != nullptr);
     }
 
-
-
 int main(){
     LinkedLIST* newNode = nullptr;
     int val = 5;
