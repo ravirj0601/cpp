@@ -1,5 +1,5 @@
-#include<iostream>
-#include<queue>
+#include <iostream>
+#include <queue>
 using namespace std;
 
 /**
@@ -20,86 +20,75 @@ using namespace std;
  * - arr[]: array for storage
  */
 class CircularQueue {
-    int* arr;
-    int front, rear, size, capacity;
+  int *arr;
+  int front, rear, size, capacity;
 
 public:
-    CircularQueue(int cap) {
-        capacity = cap;
-        arr = new int[capacity];
-        front = 0;
-        size = 0;
-        rear = capacity - 1;
-    }
+  CircularQueue(int cap) {
+    capacity = cap;
+    arr = new int[capacity];
+    front = 0;
+    size = 0;
+    rear = capacity - 1;
+  }
 
-    ~CircularQueue() {
-        delete[] arr;
-    }
+  ~CircularQueue() { delete[] arr; }
 
-    bool isFull() {
-        return size == capacity;
-    }
+  bool isFull() { return size == capacity; }
 
-    bool isEmpty() {
-        return size == 0;
-    }
+  bool isEmpty() { return size == 0; }
 
-    void enqueue(int x) {
-        if (isFull()) {
-            cout << "Queue Overflow\n";
-            return;
-        }
-        rear = (rear + 1) % capacity;
-        arr[rear] = x;
-        size++;
+  void enqueue(int x) {
+    if (isFull()) {
+      cout << "Queue Overflow\n";
+      return;
     }
+    rear = (rear + 1) % capacity;
+    arr[rear] = x;
+    size++;
+  }
 
-    void dequeue() {
-        if (isEmpty()) {
-            cout << "Queue Underflow\n";
-            return;
-        }
-        front = (front + 1) % capacity;
-        size--;
+  void dequeue() {
+    if (isEmpty()) {
+      cout << "Queue Underflow\n";
+      return;
     }
+    front = (front + 1) % capacity;
+    size--;
+  }
 
-    int getFront() {
-        if (isEmpty()) {
-            cout << "Queue is Empty\n";
-            return -1;
-        }
-        return arr[front];
+  int getFront() {
+    if (isEmpty()) {
+      cout << "Queue is Empty\n";
+      return -1;
     }
+    return arr[front];
+  }
 };
 
 // Test function for CircularQueue
 void testCircularQueue() {
-    CircularQueue q(5);
-    q.enqueue(10);
-    q.enqueue(20);
-    q.enqueue(30);
-    q.dequeue();
-    cout << "Front Element: " << q.getFront() << endl;  // Should print 20
+  CircularQueue q(5);
+  q.enqueue(10);
+  q.enqueue(20);
+  q.enqueue(30);
+  q.dequeue();
+  cout << "Front Element: " << q.getFront() << endl; // Should print 20
 }
 
 /**
  * Using Linked List
  *      For Dynamic Resizable
  */
- void usingLinkedList(){
+void usingLinkedList() {}
 
- }
+/**
+ * Using STL
+ */
+void usingSTL() {}
 
- /**
-  * Using STL 
-  */
- void usingSTL(){
-
- }
-
-int main(int argc, char const *argv[])
-{
-    // Test CircularQueue
-    testCircularQueue();
-    return 0;
+int main(int argc, char const *argv[]) {
+  // Test CircularQueue
+  testCircularQueue();
+  return 0;
 }
