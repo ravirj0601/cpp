@@ -48,13 +48,13 @@ public:
     int deleteFromEnd(){
         if(head == nullptr){
             cerr << "Queue is already empty....  \n";
-            return;
+            return -1;
         }
 
         if(head->next == nullptr){
             delete head;
             head = nullptr;
-            return;
+            return -1;
         }
 
         Node* curr = head;
@@ -71,17 +71,44 @@ public:
     int deleteFromFront(){
         if (head == nullptr) {
             cerr << "Queue is already empty....  \n";
-            return;
+            return -1;
         }
 
-        int element = head->value
+        int element = head->value;
         Node *temp = head;
         head = head->next;  
         delete head;
+        return element;
     }
 
-    void insertatPosi(int value){
-        
+    void insertatPosi(int value, int pos){
+        Node *temp = new Node(value);
+        int cnt = 1;
+        if (head == NULL) {
+            cerr << "Queue is already empty....  \n";
+            return;
+        }
+
+        Node *curr = head;
+        if (pos == 0) {
+            temp->next = head;
+            head = temp;
+        }
+
+        Node* temp2 = nullptr;
+        while (cnt != pos-1) {
+            curr = curr->next;
+            cnt += 1;
+        }
+
+        if(curr == nullptr){
+            cerr<< "Position is out of bound.\n";
+            delete temp;
+            return;
+        }
+
+        temp->next = curr->next;
+        curr->next = temp;
     }
 
     void printLL(){
