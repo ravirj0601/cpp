@@ -83,22 +83,26 @@ public:
 
     void insertatPosi(int value, int pos){
         Node *temp = new Node(value);
-        int cnt = 1;
-        if (head == NULL) {
-            cerr << "Queue is already empty....  \n";
+        int cnt = 0;
+        
+        if (pos < 0) {
+            cerr << "Invalid Position...\n";
+            delete temp;
             return;
         }
-
-        Node *curr = head;
+        
         if (pos == 0) {
             temp->next = head;
             head = temp;
+            return;
         }
 
-        Node* temp2 = nullptr;
-        while (cnt != pos-1) {
+
+        Node *curr = head;
+
+        while (curr != nullptr && cnt < pos-1) {
             curr = curr->next;
-            cnt += 1;
+            cnt++;
         }
 
         if(curr == nullptr){
@@ -109,6 +113,46 @@ public:
 
         temp->next = curr->next;
         curr->next = temp;
+    }
+
+    int deleteatPos(int pos){
+        
+        if (pos < 0) {
+            cerr << "Invalid Position.....\n";
+            return -1;
+        }
+
+        if (head == nullptr) {
+            cerr << "Empty list.....\n";
+            return -1;
+            
+        }
+
+        if (pos == 0) {
+            Node *temp = head;
+            head = head->next;
+            int element = temp->value;
+            delete temp;
+            return element;
+        }
+
+        int cnt = 0;
+        Node *curr = head;
+        while(curr != nullptr && cnt < pos -1){
+            curr = curr->next;
+            cnt++;
+        }
+
+        if (curr == nullptr || curr->next == nullptr) {
+            cerr << "List out of bound.. \n";
+            return -1;
+        }
+
+        Node *temp = curr->next;
+        curr->next = temp->next;
+        int element = temp->value;
+        delete temp;
+        return element;
     }
 
     void printLL(){
@@ -133,6 +177,34 @@ int main() {
     ll.insertFromEnd(10);
     ll.insertFromEnd(20);
     ll.insertFromEnd(30);
+    ll.printLL();
+
+    cout << "\n=== Case 1: Insert 15 at pos 1 ===\n";
+    ll.insertatPosi(15, 1);
+    ll.printLL();
+
+    cout << "\n=== Case 2: Insert 40 at end (pos 4) ===\n";
+    ll.insertatPosi(40, 4);
+    ll.printLL();
+
+    cout << "\n=== Case 3: Try invalid insert at pos 10 ===\n";
+    ll.insertatPosi(99, 10);
+    ll.printLL();
+
+
+    cout << "Initial list: ";
+    ll.printLL();
+
+    cout << "\nDelete pos 0 (front): " << ll.deleteatPos(0) << "\n";
+    ll.printLL();
+
+    cout << "\nDelete pos 1 (middle): " << ll.deleteatPos(1) << "\n";
+    ll.printLL();
+
+    cout << "\nDelete last element: " << ll.deleteatPos(1) << "\n";
+    ll.printLL();
+
+    cout << "\nTry invalid pos 10: " << ll.deleteatPos(10) << "\n";
     ll.printLL();
     return 0;
 }
