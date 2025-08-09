@@ -155,6 +155,39 @@ public:
         return element;
     }
 
+    int search(int val){
+        if(head == nullptr){
+            cerr << "Empty List, There is nothing to find...\n";
+            return -1;
+        }
+
+        Node *curr = head;
+        int cnt = 0;
+        while(curr != nullptr){
+            if(curr->value == val){
+                return cnt;
+            }
+            curr = curr->next;
+            cnt++;
+        }
+        return -1;
+    }
+
+    int count(){
+       //  if(head == nullptr){
+       //      cerr << "Empty List, There is nothing to count...\n";
+       //      return 0;
+       //  }
+
+        Node *curr = head;
+        int cnt = 0;
+        while(curr != nullptr){
+            curr = curr->next;
+            cnt++;
+        }
+        return cnt;
+    }
+
     void printLL(){
         if(head == nullptr){
             cerr << "!No Data... Empty List..\n";
@@ -174,38 +207,48 @@ public:
 
 int main() {
     LinkedList ll;
+    cout << "Count: " << ll.count() << "\n";
     ll.insertFromEnd(10);
     ll.insertFromEnd(20);
     ll.insertFromEnd(30);
     ll.printLL();
+    cout << "Count: " << ll.count() << "\n";
 
-    cout << "\n=== Case 1: Insert 15 at pos 1 ===\n";
-    ll.insertatPosi(15, 1);
-    ll.printLL();
+    // cout << "\n=== Case 1: Insert 15 at pos 1 ===\n";
+    // ll.insertatPosi(15, 1);
+    // ll.printLL();
 
-    cout << "\n=== Case 2: Insert 40 at end (pos 4) ===\n";
-    ll.insertatPosi(40, 4);
-    ll.printLL();
+    // cout << "\n=== Case 2: Insert 40 at end (pos 4) ===\n";
+    // ll.insertatPosi(40, 4);
+    // ll.printLL();
 
-    cout << "\n=== Case 3: Try invalid insert at pos 10 ===\n";
-    ll.insertatPosi(99, 10);
-    ll.printLL();
+    // cout << "\n=== Case 3: Try invalid insert at pos 10 ===\n";
+    // ll.insertatPosi(99, 10);
+    // ll.printLL();
 
 
-    cout << "Initial list: ";
-    ll.printLL();
+    // cout << "Initial list: ";
+    // ll.printLL();
 
-    cout << "\nDelete pos 0 (front): " << ll.deleteatPos(0) << "\n";
-    ll.printLL();
+    // cout << "\nDelete pos 0 (front): " << ll.deleteatPos(0) << "\n";
+    // ll.printLL();
 
-    cout << "\nDelete pos 1 (middle): " << ll.deleteatPos(1) << "\n";
-    ll.printLL();
+    // cout << "\nDelete pos 1 (middle): " << ll.deleteatPos(1) << "\n";
+    // ll.printLL();
 
-    cout << "\nDelete last element: " << ll.deleteatPos(1) << "\n";
-    ll.printLL();
+    // cout << "\nDelete last element: " << ll.deleteatPos(1) << "\n";
+    // ll.printLL();
 
-    cout << "\nTry invalid pos 10: " << ll.deleteatPos(10) << "\n";
-    ll.printLL();
+    // cout << "\nTry invalid pos 10: " << ll.deleteatPos(10) << "\n";
+    // ll.printLL();
+
+    // ll.insertFromEnd(10);
+    // ll.insertFromEnd(20);
+    // ll.insertFromEnd(30);
+    
+    cout << ll.search(10) << "th Index \n"; // expect 0
+    cout << ll.search(30) << "th Index \n"; // expect 2
+    cout << ll.search(99) << " !Not Found..\n"; // expect -1
     return 0;
 }
 
