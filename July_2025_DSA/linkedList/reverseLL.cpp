@@ -1,3 +1,4 @@
+#include <ios>
 #include <iostream>
 #include <iterator>
 using namespace std;
@@ -14,6 +15,9 @@ public:
 
 };
 
+/**
+ * Brute Force Implimentation
+ * */
 Node* reverseList(Node* head){
     vector<int>nodes;
     Node *curr = head;
@@ -31,6 +35,32 @@ Node* reverseList(Node* head){
 
     return head;
 }
+
+/**
+ * Improved Implimentation
+ * */
+Node* reverseList1(Node* head){
+    Node *prev = nullptr;
+    Node *curr = head;
+    Node *fut = nullptr;
+
+    if (head == nullptr) {
+        cerr << "List is empty Nothing to reverse.....!\n";
+        return nullptr;
+    }
+
+    while (curr != nullptr) {
+        fut = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = fut;
+    }
+    
+    head = prev;
+
+    return head;
+}
+
 
 Node* createNodeList(vector<int> list){
     Node *head = nullptr;
@@ -69,7 +99,7 @@ int main() {
     vector<int> lists = {1,2,3,4,5};
     Node *head = createNodeList(lists);
     printLL(head);
-    Node *newhead = reverseList(head);
+    Node *newhead = reverseList1(head);
     printLL(newhead);
     return 0;
 }
