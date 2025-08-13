@@ -40,25 +40,32 @@ Node* reverseList(Node* head){
  * Improved Implimentation
  * */
 Node* reverseList1(Node* head){
-    Node *prev = nullptr;
+    Node *prv = nullptr;
     Node *curr = head;
     Node *fut = nullptr;
-
     if (head == nullptr) {
         cerr << "List is empty Nothing to reverse.....!\n";
         return nullptr;
     }
-
     while (curr != nullptr) {
         fut = curr->next;
-        curr->next = prev;
-        prev = curr;
+        curr->next = prv;
+        prv = curr;
         curr = fut;
     }
-    
-    head = prev;
-
-    return head;
+    return prv;
+}
+/**
+ * Using recursion
+ * */
+Node* reverseList2(Node *curr, Node *prv){
+    if (curr == nullptr) {
+        return prv;
+    }
+    /// cout << "Inside the function\n";
+    Node* fut = curr->next;
+    curr->next = prv;
+    return reverseList2(fut, curr); 
 }
 
 
@@ -99,7 +106,7 @@ int main() {
     vector<int> lists = {1,2,3,4,5};
     Node *head = createNodeList(lists);
     printLL(head);
-    Node *newhead = reverseList1(head);
+    Node *newhead = reverseList2(head, nullptr);
     printLL(newhead);
     return 0;
 }
