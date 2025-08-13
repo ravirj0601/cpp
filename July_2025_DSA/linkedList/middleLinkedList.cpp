@@ -30,6 +30,17 @@ Node* middleNode(Node* head){
     return curr;
 }
 
+// Improved Tcchnique
+Node* middleNode1(Node* head){
+    Node *slow = head;
+    Node *fast = head;
+
+    while (fast != nullptr && fast->next != nullptr) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow;
+}   
 
 
 Node* createLL(vector<int> &lists){
@@ -51,6 +62,7 @@ Node* createLL(vector<int> &lists){
     return head;
 }
 
+
 void print(Node *head){
     Node* curr = head;
     if (head == nullptr) {
@@ -66,10 +78,10 @@ void print(Node *head){
 }
 
 int main() {
-    vector<int> lists = {1, 2, 3, 4, 5, 6};
+    vector<int> lists = {1, 2, 3, 4, 5};
     Node *head = createLL(lists);
     print(head);
-    Node *ans = middleNode(head);
+    Node *ans = middleNode1(head);
     cout << "Ans: " << ans->value << "\n";
     return 0;
 }
