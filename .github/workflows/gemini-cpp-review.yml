@@ -1,0 +1,47 @@
+name: Gemini C++ CI
+
+on:
+  push:
+    branches:
+      - main  # This will trigger the workflow on every push to the main branch
+
+jobs:
+  gemini-automation:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # This is crucial; it gives the workflow permission to push changes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Gemini CLI
+        run: npm install -g @google-gemini/cli
+
+      - name: Run Gemini CLI for automated tasks
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          # The -y flag stands for --yolo, which bypasses all approval prompts
+          gemini -p "Review the C++ code for style and logic. Compile it. If there are any errors or warnings, fix them and push the changes back to the repository." -y
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Check if there are any changes to commit before proceeding
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Automated C++ code review and fix by Gemini"
+            git push
+          else
+            echo "No changes to commit. Skipping push."
+          fi
