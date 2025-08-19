@@ -29,19 +29,23 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          # The -y flag stands for --yolo, which bypasses all approval prompts
-          gemini -p "Review the C++ code for style and logic. Compile it. If there are any errors or warnings, fix them and push the changes back to the repository." -y
+          gemini -p "Review the C++ code for style and logic. Compile it. If there are any errors or warnings, fix them. Do NOT push any changes."
 
-      - name: Commit and push changes
+      - name: Create Pull Request
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
-          # Check if there are any changes to commit before proceeding
+          BRANCH_NAME="gemini-fix/$(date +%Y%m%d%H%M%S)"
+          
           if [ -n "$(git status --porcelain)" ]; then
+            git checkout -b $BRANCH_NAME
             git add .
             git commit -m "Automated C++ code review and fix by Gemini"
-            git push
+            git push origin $BRANCH_NAME
+            
+            # Create a pull request
+            gh pr create --base main --head $BRANCH_NAME --title "Gemini Automated Fix: C++ Code Review" --body "This PR contains automated fixes suggested by Gemini CLI based on code review and compilation checks."
           else
-            echo "No changes to commit. Skipping push."
+            echo "No changes to commit. Skipping PR creation."
           fi
