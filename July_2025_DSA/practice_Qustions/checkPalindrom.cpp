@@ -118,7 +118,7 @@ int main() {
     print(head);
     bool res = checkPalindrom(head);
     if (res) {
-        cout << "list is palindrom...!\n";
+        cout << "List is palindrom...!\n";
     }else {
         cout << "List is Palindrom...!\n";
     }
