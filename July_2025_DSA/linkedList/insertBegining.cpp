@@ -133,6 +133,23 @@ class ListOps{
             return {false, -1};
         }
 
+        Node* reverseList(){
+            if (head == nullptr) {
+                throw std::out_of_range("Cannot reverse an empty list."); 
+            }
+            Node* prv_node = nullptr;
+            Node* current_node = head;
+            Node* next_node = nullptr;
+            while (current_node != nullptr) {
+                next_node  = current_node->next;
+                current_node->next = prv_node;
+                prv_node = current_node;
+                current_node = next_node;
+            }
+            head = prv_node;
+            return head;
+        }
+
         ~ListOps(){
             while (head != nullptr) {
                 Node* temp = head;
@@ -151,38 +168,40 @@ int main() {
     mylist.insertLast(50);
     cout << "Linked List: ";
     mylist.display();
+    
+    mylist.reverseList();
 
-    // Test searchElement
-    cout << "\nTesting searchElement:\n";
-    pair<bool, int> result;
+    // // Test searchElement
+    // cout << "\nTesting searchElement:\n";
+    // pair<bool, int> result;
 
-    result = mylist.searchElement(30);
-    if (result.first) {
-        cout << "Element 30 found at position: " << result.second << endl;
-    } else {
-        cout << "Element 30 not found."
-;    }
+    // result = mylist.searchElement(30);
+    // if (result.first) {
+    //     cout << "Element 30 found at position: " << result.second << endl;
+    // } else {
+    //     cout << "Element 30 not found.";
+    // }
 
-    result = mylist.searchElement(10);
-    if (result.first) {
-        cout << "Element 10 found at position: " << result.second << endl;
-    } else {
-        cout << "Element 10 not found."
-;    }
+    // result = mylist.searchElement(10);
+    // if (result.first) {
+    //     cout << "Element 10 found at position: " << result.second << endl;
+    // } else {
+    //     cout << "Element 10 not found.";
+    // }
 
-    result = mylist.searchElement(50);
-    if (result.first) {
-        cout << "Element 50 found at position: " << result.second << endl;
-    } else {
-        cout << "Element 50 not found."
-;    }
+    // result = mylist.searchElement(50);
+    // if (result.first) {
+    //     cout << "Element 50 found at position: " << result.second << endl;
+    // } else {
+    //     cout << "Element 50 not found.";
+    // }
 
-    result = mylist.searchElement(25);
-    if (result.first) {
-        cout << "Element 25 found at position: " << result.second << endl;
-    } else {
-        cout << "Element 25 not found."
-;    }
+    // result = mylist.searchElement(25);
+    // if (result.first) {
+    //     cout << "Element 25 found at position: " << result.second << endl;
+    // } else {
+    //     cout << "Element 25 not found.";
+    // }
 
     ListOps emptyList;
     cout << "\nTesting searchElement on empty list:\n";
@@ -192,7 +211,7 @@ int main() {
         cerr << "Error: " << e.what() << "\n";
     }
 
-    cout << "\nFinal Linked List: ";
+    cout << "\nReversed Linked List: ";
     mylist.display();
 
     return 0;
