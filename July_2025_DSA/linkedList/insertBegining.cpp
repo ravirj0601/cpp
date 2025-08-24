@@ -1,6 +1,7 @@
 #include <cstddef>
 #include <iostream>
 #include <stdexcept>
+#include <utility>
 using namespace std;
 
 class Node{
@@ -116,6 +117,22 @@ class ListOps{
             return val;
         }
 
+        pair<bool, int> searchElement(int val) const {
+            if (head == nullptr) {
+                throw std::out_of_range("Cannot search an empty list.");
+            }
+            int pos = 1;
+            Node* curr = head;
+            while (curr != nullptr) {
+                if (val == curr->value) {
+                    return {true, pos};
+                }
+                curr = curr->next;
+                pos++;
+            }
+            return {false, -1};
+        }
+
         ~ListOps(){
             while (head != nullptr) {
                 Node* temp = head;
@@ -135,20 +152,47 @@ int main() {
     cout << "Linked List: ";
     mylist.display();
 
+    // Test searchElement
+    cout << "\nTesting searchElement:\n";
+    pair<bool, int> result;
+
+    result = mylist.searchElement(30);
+    if (result.first) {
+        cout << "Element 30 found at position: " << result.second << endl;
+    } else {
+        cout << "Element 30 not found."
+;    }
+
+    result = mylist.searchElement(10);
+    if (result.first) {
+        cout << "Element 10 found at position: " << result.second << endl;
+    } else {
+        cout << "Element 10 not found."
+;    }
+
+    result = mylist.searchElement(50);
+    if (result.first) {
+        cout << "Element 50 found at position: " << result.second << endl;
+    } else {
+        cout << "Element 50 not found."
+;    }
+
+    result = mylist.searchElement(25);
+    if (result.first) {
+        cout << "Element 25 found at position: " << result.second << endl;
+    } else {
+        cout << "Element 25 not found."
+;    }
+
+    ListOps emptyList;
+    cout << "\nTesting searchElement on empty list:\n";
     try {
-        // cout << "Popped: " << mylist.popHead() << endl; // Pop 30
-        // cout << "Popped: " << mylist.popHead() << endl; // Pop 20
-        // cout << "Popped: " << mylist.popHead() << endl; // Pop 10
-        cout << "Popped: " << mylist.popPositon(2) << endl; // Pop 10
-        cout << "Popped: " << mylist.popPositon(1) << endl; // Pop 10
-        cout << "Popped: " << mylist.popTail() << endl; // Pop 40
-        // cout << "Popped: " << mylist.popTail() << endl; // Pop 50
-        // cout << "Popped: " << mylist.popTail() << endl; // This will throw an exception
+        emptyList.searchElement(100);
     } catch (const out_of_range& e) {
         cerr << "Error: " << e.what() << "\n";
     }
 
-    cout << "Final Linked List: ";
+    cout << "\nFinal Linked List: ";
     mylist.display();
 
     return 0;
