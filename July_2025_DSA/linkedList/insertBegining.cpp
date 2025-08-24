@@ -42,7 +42,7 @@ class ListOps{
         }
 
         // For displaying element of linkedList
-        void display(){
+        void display() const {
             Node* temp = head;
             while(temp != nullptr){
                 cout << temp->value << " ";
@@ -61,6 +61,29 @@ class ListOps{
             delete temp;
             return val;
         }
+
+        int popTail(){
+            if (head == nullptr) {
+                throw std::out_of_range("Can not POP from a empty list...!");
+            }
+            if (head->next == nullptr) {
+                int val = head->value;
+                delete head;
+                head = nullptr;
+                return val;
+            }
+            Node* curr = head;
+            Node* prv = nullptr;
+            while (curr->next != nullptr) {
+                prv = curr;
+                curr = curr->next;
+            }
+            prv->next = nullptr;
+            int val = curr->value;
+            delete curr;
+            return val;
+        }
+
         ~ListOps(){
             while (head != nullptr) {
                 Node* temp = head;
@@ -84,9 +107,9 @@ int main() {
         cout << "Popped: " << mylist.popHead() << endl; // Pop 30
         cout << "Popped: " << mylist.popHead() << endl; // Pop 20
         cout << "Popped: " << mylist.popHead() << endl; // Pop 10
-        cout << "Popped: " << mylist.popHead() << endl; // Pop 40
-        cout << "Popped: " << mylist.popHead() << endl; // Pop 50
-        cout << "Popped: " << mylist.popHead() << endl; // This will throw an exception
+        cout << "Popped: " << mylist.popTail() << endl; // Pop 40
+        cout << "Popped: " << mylist.popTail() << endl; // Pop 50
+        cout << "Popped: " << mylist.popTail() << endl; // This will throw an exception
     } catch (const out_of_range& e) {
         cerr << "Error: " << e.what() << "\n";
     }
