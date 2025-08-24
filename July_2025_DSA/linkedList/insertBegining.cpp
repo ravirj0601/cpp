@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 using namespace std;
 
 class Node{
@@ -49,7 +50,17 @@ class ListOps{
             }
             cout << endl;
         }
-
+        
+        int popHead(){
+            if (head == nullptr) {
+                throw std::out_of_range("Can not POP from a empty list...!");
+            }
+            Node* temp = head;
+            head = head->next;
+            int val = temp->value;
+            delete temp;
+            return val;
+        }
         ~ListOps(){
             while (head != nullptr) {
                 Node* temp = head;
@@ -67,6 +78,20 @@ int main() {
     mylist.insertLast(40);
     mylist.insertLast(50);
     cout << "Linked List: ";
+    mylist.display();
+
+    try {
+        cout << "Popped: " << mylist.popHead() << endl; // Pop 30
+        cout << "Popped: " << mylist.popHead() << endl; // Pop 20
+        cout << "Popped: " << mylist.popHead() << endl; // Pop 10
+        cout << "Popped: " << mylist.popHead() << endl; // Pop 40
+        cout << "Popped: " << mylist.popHead() << endl; // Pop 50
+        cout << "Popped: " << mylist.popHead() << endl; // This will throw an exception
+    } catch (const out_of_range& e) {
+        cerr << "Error: " << e.what() << "\n";
+    }
+
+    cout << "Final Linked List: ";
     mylist.display();
 
     return 0;
