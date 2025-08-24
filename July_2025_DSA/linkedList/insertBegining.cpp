@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <iostream>
 #include <stdexcept>
 using namespace std;
@@ -51,6 +52,7 @@ class ListOps{
             cout << endl;
         }
         
+        // Remove element from front of the list  
         int popHead(){
             if (head == nullptr) {
                 throw std::out_of_range("Can not POP from a empty list...!");
@@ -61,7 +63,8 @@ class ListOps{
             delete temp;
             return val;
         }
-
+        
+        // Remove element from tail of the list
         int popTail(){
             if (head == nullptr) {
                 throw std::out_of_range("Can not POP from a empty list...!");
@@ -79,6 +82,35 @@ class ListOps{
                 curr = curr->next;
             }
             prv->next = nullptr;
+            int val = curr->value;
+            delete curr;
+            return val;
+        }
+        
+        //Remove from the given position k/n
+        int popPositon(int n){
+            if (n <= 0) {
+                throw std::invalid_argument("Need a valid position.. !");
+            }
+            if (head == nullptr) {
+                throw std::out_of_range("Can not POP from a empty list.. !");
+            }
+            if (n == 1) {
+                int val = popHead();
+                return val;
+            }
+            int i = 0;
+            Node* curr = head;
+            Node* prv = nullptr;
+            while (i < n - 1 && curr != nullptr) {
+                prv = curr;
+                curr = curr->next;
+                i++;
+            }
+            if (curr == nullptr) {
+                throw std::out_of_range("n is bigger then the size of LinkedList...!");
+            }
+            prv->next = curr->next;
             int val = curr->value;
             delete curr;
             return val;
@@ -104,12 +136,14 @@ int main() {
     mylist.display();
 
     try {
-        cout << "Popped: " << mylist.popHead() << endl; // Pop 30
-        cout << "Popped: " << mylist.popHead() << endl; // Pop 20
-        cout << "Popped: " << mylist.popHead() << endl; // Pop 10
+        // cout << "Popped: " << mylist.popHead() << endl; // Pop 30
+        // cout << "Popped: " << mylist.popHead() << endl; // Pop 20
+        // cout << "Popped: " << mylist.popHead() << endl; // Pop 10
+        cout << "Popped: " << mylist.popPositon(2) << endl; // Pop 10
+        cout << "Popped: " << mylist.popPositon(1) << endl; // Pop 10
         cout << "Popped: " << mylist.popTail() << endl; // Pop 40
-        cout << "Popped: " << mylist.popTail() << endl; // Pop 50
-        cout << "Popped: " << mylist.popTail() << endl; // This will throw an exception
+        // cout << "Popped: " << mylist.popTail() << endl; // Pop 50
+        // cout << "Popped: " << mylist.popTail() << endl; // This will throw an exception
     } catch (const out_of_range& e) {
         cerr << "Error: " << e.what() << "\n";
     }
