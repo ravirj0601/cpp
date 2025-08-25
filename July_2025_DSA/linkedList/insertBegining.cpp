@@ -150,6 +150,19 @@ class ListOps{
             return head;
         }
 
+        Node* reverseRecursive(Node* curr_node, Node* prev_node){
+            if (curr_node == nullptr) {
+                return prev_node;
+            }
+            Node* next_node = curr_node->next;
+            curr_node->next = prev_node;
+            return reverseRecursive(next_node, curr_node);
+        }
+
+        void reverseList1(){
+            head = reverseRecursive(head, nullptr);
+        }
+
         ~ListOps(){
             while (head != nullptr) {
                 Node* temp = head;
@@ -169,7 +182,7 @@ int main() {
     cout << "Linked List: ";
     mylist.display();
     
-    mylist.reverseList();
+    mylist.reverseList1();
 
     // // Test searchElement
     // cout << "\nTesting searchElement:\n";
