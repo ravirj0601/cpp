@@ -75,6 +75,25 @@ class List{
             }
             return{slow->value, i};
         }
+
+        bool detectCycle() const{
+            if (head == nullptr) {
+                throw std::out_of_range("List is empty...!\n");
+            }
+
+            Node* slow = head;
+            Node* fast = head;
+
+            while (fast && fast->next) {
+                slow = slow->next;
+                fast = fast->next->next;
+                if (slow == fast) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 };
 
 int main() {
@@ -85,75 +104,30 @@ int main() {
     mylist.insertFront(40);
     mylist.insertFront(50);
 
-    // List: 50 -> 40 -> 30 -> 20 -> 10
-
-    pair<int, int> middle = mylist.findMiddle();
-    cout << "Middle element: Value = " << middle.second << ", Position = " << middle.first << endl;
-
-    List mylist2;
-    mylist2.insertFront(100);
-    mylist2.insertFront(200);
-    mylist2.insertFront(300);
-    mylist2.insertFront(400);
-
-    // List: 400 -> 300 -> 200 -> 100
-
-    pair<int, int> middle2 = mylist2.findMiddle();
-    cout << "Middle element: Value = " << middle2.second << ", Position = " << middle2.first << endl;
-
-    // Test findKthfromEnd
-    cout << "\nTesting findKthfromEnd:\n";
-    pair<int, int> kth_from_end;
-
-    // Test case 1: k = 1 (last element)
-    try {
-        kth_from_end = mylist.findKthfromEnd(1);
-        cout << "1st from end: Value = " << kth_from_end.first << ", Position = " << kth_from_end.second << endl;
-    } catch (const out_of_range& e) {
-        cerr << "Error: " << e.what() << endl;
+    // Test case 1: No cycle
+    cout << "Test Case 1: List with no cycle\n";
+    if (mylist.detectCycle()) {
+        cout << "Cycle detected (Incorrect)\n";
+    } else {
+        cout << "No cycle detected (Correct)\n";
     }
 
-    // Test case 2: k = 3 (middle element)
+    // Test case 2: Empty list
+    cout << "\nTest Case 2: Empty list\n";
+    List emptyList;
     try {
-        kth_from_end = mylist.findKthfromEnd(3);
-        cout << "3rd from end: Value = " << kth_from_end.first << ", Position = " << kth_from_end.second << endl;
-    } catch (const out_of_range& e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
-    // Test case 3: k = 5 (first element)
-    try {
-        kth_from_end = mylist.findKthfromEnd(5);
-        cout << "5th from end: Value = " << kth_from_end.first << ", Position = " << kth_from_end.second << endl;
-    } catch (const out_of_range& e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
-    // Test case 4: k > list length
-    try {
-        kth_from_end = mylist.findKthfromEnd(6);
-        cout << "6th from end: Value = " << kth_from_end.first << ", Position = " << kth_from_end.second << endl;
-    } catch (const out_of_range& e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
-    // Test case 5: k = 0 (invalid argument)
-    try {
-        kth_from_end = mylist.findKthfromEnd(0);
-        cout << "0th from end: Value = " << kth_from_end.first << ", Position = " << kth_from_end.second << endl;
-    } catch (const invalid_argument& e) {
-        cerr << "Error: " << e.what() << endl;
-    }
-
-    // Test case 6: Empty list
-    List emptyList2;
-    try {
-        kth_from_end = emptyList2.findKthfromEnd(1);
-        cout << "1st from end in empty list: Value = " << kth_from_end.first << ", Position = " << kth_from_end.second << endl;
-    } catch (const out_of_range& e) {
-        cerr << "Error: " << e.what() << endl;
+        emptyList.detectCycle();
+        cout << "No exception thrown for empty list (Incorrect)\n";
+    } catch (const std::out_of_range& e) {
+        cerr << "Error: " << e.what() << " (Correct)\n";
     }
     
+    // To properly test a cycle, we would need a way to manually link nodes
+    // to form a cycle, which the current `List` class doesn't expose.
+    // If you want to test a cycle, you would need to add a method to `List`
+    // that allows creating a cycle for testing purposes, or create a list
+    // with a cycle outside the `List` class.
+
     return 0;
 }
 
