@@ -94,6 +94,31 @@ class List{
             return false;
         }
 
+        // Method to create a cycle for testing
+        void createCycle(int position) {
+            if (head == nullptr || position <= 0) {
+                // Cannot create a cycle in an empty list or with an invalid position
+                return;
+            }
+
+            Node* last_node = head;
+            while (last_node->next != nullptr) {
+                last_node = last_node->next;
+            }
+
+            Node* node_at_position = head;
+            for (int i = 1; i < position; ++i) {
+                if (node_at_position == nullptr) {
+                    // Position is out of bounds
+                    return;
+                }
+                node_at_position = node_at_position->next;
+            }
+            
+            // Create the cycle: last node points to the node at the given position
+            last_node->next = node_at_position;
+        }
+
 };
 
 int main() {
@@ -102,7 +127,7 @@ int main() {
     mylist.insertFront(20);
     mylist.insertFront(30);
     mylist.insertFront(40);
-    mylist.insertFront(50);
+    mylist.insertFront(50); // List: 50 -> 40 -> 30 -> 20 -> 10
 
     // Test case 1: No cycle
     cout << "Test Case 1: List with no cycle\n";
@@ -112,8 +137,19 @@ int main() {
         cout << "No cycle detected (Correct)\n";
     }
 
-    // Test case 2: Empty list
-    cout << "\nTest Case 2: Empty list\n";
+    // Test case 2: Create a cycle (e.g., last node points to the 3rd node, which is 30)
+    // List: 50 -> 40 -> 30 -> 20 -> 10 -> (points back to 30)
+    mylist.createCycle(3); // Create a cycle at position 3 (value 30)
+
+    cout << "\nTest Case 2: List with a cycle\n";
+    if (mylist.detectCycle()) {
+        cout << "Cycle detected (Correct)\n";
+    } else {
+        cout << "No cycle detected (Incorrect)\n";
+    }
+
+    // Test case 3: Empty list
+    cout << "\nTest Case 3: Empty list\n";
     List emptyList;
     try {
         emptyList.detectCycle();
@@ -122,12 +158,6 @@ int main() {
         cerr << "Error: " << e.what() << " (Correct)\n";
     }
     
-    // To properly test a cycle, we would need a way to manually link nodes
-    // to form a cycle, which the current `List` class doesn't expose.
-    // If you want to test a cycle, you would need to add a method to `List`
-    // that allows creating a cycle for testing purposes, or create a list
-    // with a cycle outside the `List` class.
-
     return 0;
 }
 
