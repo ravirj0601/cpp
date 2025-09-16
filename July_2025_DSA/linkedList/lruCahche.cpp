@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 /**
@@ -49,13 +50,22 @@ class LRUCache{
         int value;
         Node* head;
         Node* tail;
+        unordered_map<int, Node*> mOrder;
 
         void push_to_front(Node* newNode){
             if (head == newNode && tail == newNode) {
-                willl start tommorow                
-            }
-
+                }
         }
+        void removeFromEnd(){   
+        }
+
+    public:
+
+        LRUCache():head(nullptr), tail(nullptr){}
+        void put(int key, int value){}
+        int get(int key){}
+        ~LRUCache(){}
+
 };
 
 int main() {
