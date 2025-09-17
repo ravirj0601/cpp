@@ -46,22 +46,23 @@ public:
 class LRUCache{
     private:
         int capacity;
-        int key;
-        int value;
         Node* head;
         Node* tail;
         unordered_map<int, Node*> mOrder;
 
         void push_to_front(Node* newNode){
-            if (head == newNode && tail == newNode) {
-                }
+            if (head == newNode) {
+                return;
+            }else if (tail == newNode ) {
+                 
+            }
         }
-        void removeFromEnd(){   
+        void remove_From_End(){   
         }
 
     public:
 
-        LRUCache():head(nullptr), tail(nullptr){}
+        LRUCache():head(nullptr), tail(nullptr){} 
         void put(int key, int value){}
         int get(int key){}
         ~LRUCache(){}
