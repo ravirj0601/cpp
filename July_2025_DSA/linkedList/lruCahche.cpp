@@ -51,11 +51,6 @@ class LRUCache{
         unordered_map<int, Node*> mOrder;
 
         void push_to_front(Node* newNode){
-            if (head == newNode) {
-                return;
-            }else if (tail == newNode ) {
-                 
-            }
         }
         void remove_From_End(){   
         }
