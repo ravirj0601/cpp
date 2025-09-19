@@ -56,16 +56,13 @@ class LRUCache{
         }
 
     public:
-
         LRUCache():head(nullptr), tail(nullptr){} 
         void put(int key, int value){}
         int get(int key){}
         ~LRUCache(){}
-
 };
 
 int main() {
-    
     return 0;
 }
 
