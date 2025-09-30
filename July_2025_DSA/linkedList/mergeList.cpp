@@ -111,8 +111,8 @@ class NodeOps{
 Node* mergeList(Node* head1, Node* head2){
     if (head1 == nullptr) return head2; 
     if (head2 == nullptr) return head1; 
-    Node* tempHead = new Node(0);
-    Node* curr = tempHead;
+    Node tempHead(0);
+    Node* curr = &tempHead;
     Node* curr1 = head1;
     Node* curr2 = head2;
     while (curr1 != nullptr && curr2 != nullptr) {
@@ -130,8 +130,8 @@ Node* mergeList(Node* head1, Node* head2){
     } else if (curr2 != nullptr) {
         curr->next = curr2;
     }
-    Node* newHead = tempHead->next;
-    delete tempHead;
+    Node* newHead = tempHead.next;
+    //delete tempHead;
     return newHead;
 }
 
