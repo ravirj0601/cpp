@@ -1,53 +1,47 @@
 #include <iostream>
-#include <nl_types.h>
 #include <stdexcept>
 #include <vector>
-using namespace std;
+
 
 class stackWithVector{
     private:
-        vector<int> st;
+        std::vector<int> st;
         int limit_;
     public:
         stackWithVector(int size):limit_(size){}
         void push(const int& value){
             if (st.size() >= limit_) {
-                throw out_of_range("Stack is full!");
+                throw std::out_of_range("Stack is full!");
             }
             st.push_back(value);
-            return;
         }
 
         int pop(){
-            if (st.empty()) {
-                return -1;
-            }
+            if (st.empty()) throw std::underflow_error("Stack is empty!");
             int val = st.back();
             st.pop_back();
             return val;
         }
 
         int top() const {
-            if (st.empty()) return -1;
+            if (st.empty()) throw std::underflow_error("Stack is empty!");
             return st.back();
         }
 
         int size() const noexcept { return st.size(); }
         
         bool isEmpty() const noexcept{
-            if(st.empty()){
-                return true;   
-            }
+            return st.empty();
         }
 
-        size_t capacity() const noexcept { return st.capacity(); }
+        size_t max_size() const noexcept { return st.capacity(); }
 
         void printElement(){
-            cout << "Elements: ";
+            std::cout << "Elements: ";
             for (auto const num : st) {
-                cout << num << " ";
+                std::cout << num << " ";
             }
-            cout << "\n";
+            std::cout << "\n";
         }
 
         ~stackWithVector(){}
@@ -55,48 +49,48 @@ class stackWithVector{
 };
 
 int main() {
-    try{
-        stackWithVector st(4);
-        std::cout << "Initial capacity (reserved): " << st.capacity() << "\n";
+    std::cout << "--- Simple Stack Test ---\n";
+    stackWithVector st(3);
 
-        st.push(10);
-        st.push(20);
-        st.push(30);
-        st.printElement();
-        std::cout << "Top: " << st.top() << " size=" << st.size() << "\n";
+    st.push(10);
+    st.push(20);
+    st.push(30);
+    st.printElement();
+    std::cout << "Top element: " << st.top() << ", Size: " << st.size() << "\n";
 
-        st.pop();
-        std::cout << "After pop, top: " << st.top() << " size=" << st.size() << "\n";
+    st.pop();
+    st.printElement();
+    std::cout << "Top element: " << st.top() << ", Size: " << st.size() << "\n";
 
-        st.push(40);
+    st.push(40);
+    st.printElement();
+    std::cout << "Top element: " << st.top() << ", Size: " << st.size() << "\n";
+
+    std::cout << "Is stack empty? " << (st.isEmpty() ? "Yes" : "No") << "\n";
+
+    // Test stack overflow
+    try {
+        std::cout << "Attempting to push to a full stack (expecting exception)...\n";
         st.push(50);
-        st.push(60); // triggers growth if needed
-        std::cout << "After pushes, size=" << st.size() << " capacity=" << st.capacity() << "\n";
-
-        st.printElement();
-        while (!st.isEmpty()) {
-            std::cout << "popping: " << st.top() << "\n";
-            st.pop();
-        }
-        
-        // expect underflow
-        try {
-            st.pop();
-        } catch (const std::exception& ex) {
-            std::cout << "Expected: " << ex.what() << "\n";
-        }
-
-        // move/copy test
-        st.push(100);
-        st.push(200);
-        st.printElement();
-        // StackUsingVector<int> s2 = std::move(s); // s moved-from
-        // std::cout << "s2.top() after move: " << s2.top() << "\n";
-        std::cout << "s.size() after move: " << st.size() << "\n";
-    }catch(const std::exception& e){
-        cerr << "Fatal: " << e.what() << "\n";
-        return 1;
+    } catch (const std::out_of_range& ex) {
+        std::cout << "Caught expected exception: " << ex.what() << "\n";
     }
-        return 0;
+
+    // Empty the stack
+    while (!st.isEmpty()) {
+        st.pop();
+    }
+
+    // Test stack underflow
+    try {
+        std::cout << "Attempting to pop from an empty stack (expecting exception)...\n";
+        st.pop();
+    } catch (const std::underflow_error& ex) {
+        std::cout << "Caught expected exception: " << ex.what() << "\n";
+    }
+
+    std::cout << "--- Simple Stack Test Completed ---\n";
+
+    return 0;
 }
 
