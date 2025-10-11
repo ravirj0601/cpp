@@ -7,7 +7,7 @@ class StackUsingArray{
         int top = -1;
         int capacity = 0;
     public:
-        StackUsingArray(): arr(new int[4]){}            // default Constr
+        StackUsingArray(): capacity(4), arr(new int[4]){}// default Constr
         StackUsingArray(int size):capacity(size) {
             arr = new int[capacity];
         }                                               // parameterized Constr
